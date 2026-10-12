@@ -14,7 +14,7 @@ Proyek ini berfokus pada mempertahankan kemiripan visual terhadap gambar referen
 ## Menjalankan
 
 ```bash
-python -m pip install pillow cairosvg
+python -m pip install -r requirements.txt cairosvg
 python scripts/upscale_reference.py --height 4096
 python scripts/upscale_reference.py --height 8192
 python -m unittest discover -s tests -v
