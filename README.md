@@ -1,33 +1,25 @@
-# MikroTik Static Routing Poster
+# Image Projects
 
-Poster edukasi konfigurasi **static routing dua arah** untuk dua router MikroTik. Format master SVG berbasis vektor; dapat diekspor ke PNG dan PDF.
+Repositori untuk menyimpan proyek gambar secara rapi. **Setiap gambar atau karya memiliki satu folder proyek sendiri**; sumber, skrip, hasil akhir, dan dokumentasi tidak dicampur dengan proyek lain.
 
-## Struktur
+## Struktur standar
 
-- `src/static-routing-mikrotik.svg` — master poster vektor A3 portrait.
-- `scripts/build_poster.py` — ekspor SVG ke PNG dan PDF.
-- `content/static-routing.md` — topologi, alamat IP, dan konfigurasi yang digunakan.
-- `dist/` — lokasi hasil ekspor setelah build dijalankan.
-
-## Topologi
-
-- LAN 1: `192.168.1.0/24`, gateway Router 1 `192.168.1.1`
-- Link antar-router: `172.16.1.0/30`
-- Router 1 transit: `172.16.1.1/30`
-- Router 2 transit: `172.16.1.2/30`
-- LAN 2: `192.168.2.0/24`, gateway Router 2 `192.168.2.1`
-
-## Build
-
-Gunakan Python 3.10+ dan pasang dependensi:
-
-```bash
-python -m pip install cairosvg
-python scripts/build_poster.py
+```text
+nama-proyek/
+├── README.md
+├── source/
+├── scripts/
+├── output/
+└── docs/
 ```
 
-Output akan dibuat di `dist/static-routing-mikrotik.png` dan `dist/static-routing-mikrotik.pdf`.
+- `source/`: sumber utama yang dapat diedit.
+- `scripts/`: skrip untuk membangun atau memproses karya.
+- `output/`: hasil akhir PNG, JPG, PDF, dan format lain.
+- `docs/`: spesifikasi, catatan, dan petunjuk.
 
-## Catatan
+## Proyek
 
-Contoh interface memakai `bridge1` untuk LAN dan `ether1` untuk link transit. Sesuaikan nama interface dengan perangkat nyata. Gunakan RouterOS CLI atau WinBox, dan uji konektivitas dari kedua arah. Static route tidak menggantikan konfigurasi IP, gateway klien, atau kebijakan firewall yang sesuai.
+- [Static Routing MikroTik](static-routing-mikrotik/) — poster edukasi A3 tentang static routing dua router.
+
+Setiap proyek harus diperiksa hasilnya sebelum ditandai selesai. File sementara disimpan di dalam folder proyek terkait, bukan di root repositori.

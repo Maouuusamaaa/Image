@@ -1,4 +1,4 @@
-# Static Routing MikroTik — content notes
+# Static Routing MikroTik — catatan konfigurasi
 
 ## Skema alamat
 
@@ -38,4 +38,4 @@ add dst-address=192.168.1.0/24 gateway=172.16.1.1
 /ping 192.168.2.1
 ```
 
-Jalankan ping dari R1 ke alamat LAN R2 dan sebaliknya. Setelah itu uji antar-klien dari dua LAN. Pastikan alamat IP, subnet mask, gateway klien, route balik, dan firewall sesuai. Hasil ping router-ke-router saja belum membuktikan seluruh trafik antar-klien diizinkan.
+Uji ping dari R1 ke alamat LAN R2 dan sebaliknya, lalu uji komunikasi antar-klien. Pastikan IP, subnet, gateway klien, route balik, dan firewall sesuai. Ping ke router saja belum membuktikan seluruh trafik antar-klien diizinkan.
