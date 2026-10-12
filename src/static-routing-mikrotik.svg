@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="420mm" viewBox="0 0 900 1273">
+<defs>
+ <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#071426"/><stop offset="1" stop-color="#020914"/></linearGradient>
+ <linearGradient id="panel" x2="1" y2="1"><stop stop-color="#0b2340"/><stop offset="1" stop-color="#061326"/></linearGradient>
+ <linearGradient id="cyan" x2="1" y2="1"><stop stop-color="#35d9ff"/><stop offset="1" stop-color="#087db8"/></linearGradient>
+ <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#12395c" stroke-width="1"/></pattern>
+ <style>
+ .t{font-family:Arial,Helvetica,sans-serif;fill:#f8fafc}.muted{fill:#b9cce2}.cyan{fill:#35d9ff}.orange{fill:#ff9f43}.purple{fill:#a78bfa}.h{font-weight:700}.mono{font-family:monospace;font-size:14px;fill:#d9eaff}.panel{fill:url(#panel);stroke:#087eb4;stroke-width:1.5}.sub{fill:#061324;stroke:#176b9a;stroke-width:1.2}
+ </style>
+</defs>
+<rect width="900" height="1273" fill="url(#bg)"/><rect width="900" height="1273" fill="url(#grid)" opacity=".55"/>
+<text x="40" y="42" class="t cyan h" font-size="16" letter-spacing="2">TKJ / NETWORK ENGINEERING</text>
+<text x="40" y="104" class="t h" font-size="48">STATIC ROUTING</text><text x="40" y="154" class="cyan h" font-size="46">MIKROTIK</text>
+<text x="42" y="185" class="t" font-size="17">Konfigurasi dua router dengan rute statis untuk</text><text x="42" y="208" class="t" font-size="17">menghubungkan dua jaringan LAN yang berbeda.</text>
+<rect x="650" y="34" width="210" height="142" rx="16" class="panel"/>
+<text x="755" y="69" text-anchor="middle" class="t h" font-size="25">IPv4</text><text x="755" y="99" text-anchor="middle" class="cyan h" font-size="17">2 ROUTER</text><text x="755" y="125" text-anchor="middle" class="t" font-size="15">3 NETWORK</text><text x="755" y="150" text-anchor="middle" class="muted" font-size="13">Routing dua arah</text>
+<rect x="28" y="235" width="844" height="300" rx="22" class="panel"/>
+<path d="M70 410L245 320L425 410L245 500Z M475 410L655 320L830 410L655 500Z" fill="#0b2b4c" stroke="#176ca4" stroke-width="2"/>
+<path d="M70 410L245 500L245 478L70 388Z M245 500L425 410L425 432L245 522Z M475 410L655 500L655 478L475 388Z M655 500L830 410L830 432L655 522Z" fill="#0a4773" stroke="#35d9ff" stroke-width="1.2"/>
+<rect x="52" y="258" width="230" height="78" rx="12" class="sub"/><text x="70" y="283" class="cyan h" font-size="19">LAN 1</text><text x="70" y="307" class="t" font-size="16">192.168.1.0/24</text><text x="70" y="326" class="muted" font-size="14">Gateway 192.168.1.1</text>
+<rect x="618" y="258" width="230" height="78" rx="12" class="sub"/><text x="636" y="283" class="cyan h" font-size="19">LAN 2</text><text x="636" y="307" class="t" font-size="16">192.168.2.0/24</text><text x="636" y="326" class="muted" font-size="14">Gateway 192.168.2.1</text>
+<path d="M280 375L365 375L405 410L495 410L535 375L618 375" fill="none" stroke="#ff9f43" stroke-width="5"/><circle cx="450" cy="410" r="9" fill="#ff9f43"/>
+<rect x="355" y="275" width="190" height="62" rx="12" class="sub"/><text x="450" y="299" text-anchor="middle" class="cyan h" font-size="17">JARINGAN TRANSIT</text><text x="450" y="322" text-anchor="middle" class="t" font-size="17">172.16.1.0/30</text>
+<g><rect x="290" y="380" width="140" height="66" rx="12" fill="#101f36" stroke="#ff9f43" stroke-width="2"/><text x="360" y="405" text-anchor="middle" class="orange h" font-size="19">ROUTER 1</text><text x="360" y="427" text-anchor="middle" class="t" font-size="14">172.16.1.1/30</text></g>
+<g><rect x="470" y="380" width="140" height="66" rx="12" fill="#101f36" stroke="#ff9f43" stroke-width="2"/><text x="540" y="405" text-anchor="middle" class="orange h" font-size="19">ROUTER 2</text><text x="540" y="427" text-anchor="middle" class="t" font-size="14">172.16.1.2/30</text></g>
+<text x="450" y="478" text-anchor="middle" class="t h" font-size="16">R1 ⇄ R2 • link antar-router</text>
+<rect x="28" y="555" width="414" height="310" rx="18" class="panel"/><rect x="458" y="555" width="414" height="310" rx="18" class="panel"/>
+<text x="50" y="591" class="cyan h" font-size="23">01  KONFIGURASI R1</text>
+<rect x="45" y="610" width="380" height="238" rx="10" class="sub"/>
+<text x="62" y="640" class="orange h" font-size="16">Alamat interface</text>
+<text x="62" y="665" class="mono">/ip address</text><text x="62" y="687" class="mono">add address=192.168.1.1/24 \</text><text x="78" y="707" class="mono">interface=bridge1</text><text x="62" y="731" class="mono">add address=172.16.1.1/30 \</text><text x="78" y="751" class="mono">interface=ether1</text>
+<text x="62" y="784" class="orange h" font-size="16">Route ke LAN 2</text><text x="62" y="808" class="mono">/ip route</text><text x="62" y="830" class="mono">add dst-address=192.168.2.0/24</text><text x="62" y="846" class="mono">gateway=172.16.1.2</text>
+<text x="480" y="591" class="cyan h" font-size="23">02  KONFIGURASI R2</text>
+<rect x="475" y="610" width="380" height="238" rx="10" class="sub"/>
+<text x="492" y="640" class="orange h" font-size="16">Alamat interface</text>
+<text x="492" y="665" class="mono">/ip address</text><text x="492" y="687" class="mono">add address=192.168.2.1/24 \</text><text x="508" y="707" class="mono">interface=bridge1</text><text x="492" y="731" class="mono">add address=172.16.1.2/30 \</text><text x="508" y="751" class="mono">interface=ether1</text>
+<text x="492" y="784" class="orange h" font-size="16">Route ke LAN 1</text><text x="492" y="808" class="mono">/ip route</text><text x="492" y="830" class="mono">add dst-address=192.168.1.0/24</text><text x="492" y="846" class="mono">gateway=172.16.1.1</text>
+<rect x="28" y="885" width="414" height="245" rx="18" class="panel"/><rect x="458" y="885" width="414" height="245" rx="18" class="panel"/>
+<text x="50" y="921" class="cyan h" font-size="23">03  VERIFIKASI</text><text x="50" y="951" class="t h" font-size="16">Tabel routing</text><rect x="45" y="963" width="380" height="42" rx="8" class="sub"/><text x="60" y="990" class="mono">/ip/route/print</text>
+<text x="50" y="1034" class="t h" font-size="16">Uji konektivitas</text><rect x="45" y="1045" width="380" height="40" rx="8" class="sub"/><text x="60" y="1071" class="mono">/ping 192.168.2.1</text><text x="50" y="1110" class="muted" font-size="13">Uji balik dari R2 dan antar-klien.</text>
+<text x="480" y="921" class="cyan h" font-size="23">04  CHECKLIST</text>
+<text x="485" y="956" class="t" font-size="16">✓ IP address dan subnet benar</text><text x="485" y="986" class="t" font-size="16">✓ Gateway klien sesuai LAN</text><text x="485" y="1016" class="t" font-size="16">✓ Route balik tersedia di R2</text><text x="485" y="1046" class="t" font-size="16">✓ Firewall mengizinkan trafik</text><text x="485" y="1082" class="orange h" font-size="15">Sesuaikan nama interface perangkat.</text><text x="485" y="1105" class="muted" font-size="13">Ping router saja belum membuktikan</text><text x="485" y="1122" class="muted" font-size="13">semua klien dapat saling berkomunikasi.</text>
+<path d="M28 1152H872" stroke="#35d9ff" stroke-width="2"/><text x="40" y="1187" class="t h" font-size="18">MikroTik • Simple Configuration • Powerful Network</text><text x="40" y="1216" class="muted" font-size="14">Static routing dua arah | A3 portrait | Master SVG</text><text x="860" y="1248" text-anchor="end" class="purple h" font-size="15">TKJ / NETWORKING</text>
+</svg>
