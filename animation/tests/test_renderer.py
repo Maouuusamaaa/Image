@@ -34,6 +34,25 @@ class RigTests(unittest.TestCase):
         self.assertEqual(poses_before[1].crouch, 0)
         self.assertGreater(poses_after[1].crouch, 0)
 
+    def test_walk_cycle_changes_foot_and_arm_positions(self):
+        standing = render_battle.scene_state(0.1)[0][0]
+        walking = render_battle.scene_state(1.0)[0][0]
+        self.assertGreater(walking.gait_weight, 0.5)
+        rig = StickmanRig()
+        stand_joints = rig.joints(standing)
+        walk_joints = rig.joints(walking)
+        self.assertNotEqual(stand_joints['left_foot'], walk_joints['left_foot'])
+        self.assertNotEqual(stand_joints['right_hand'], walk_joints['right_hand'])
+
+    def test_idle_pose_has_relaxed_bent_arms(self):
+        pose = render_battle.scene_state(11.5)[0][0]
+        joints = StickmanRig().joints(pose)
+        upper = distance(joints['shoulder'], joints['right_elbow'])
+        forearm = distance(joints['right_elbow'], joints['right_hand'])
+        self.assertAlmostEqual(upper, StickmanRig().rig.upper_arm, places=3)
+        self.assertAlmostEqual(forearm, StickmanRig().rig.forearm, places=3)
+        self.assertGreater(joints['right_hand'][1], joints['shoulder'][1])
+
     def test_render_output(self):
         frame = render_battle.render_frame(0)
         self.assertEqual(frame.size, (960,540))
