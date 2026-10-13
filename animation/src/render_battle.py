@@ -43,8 +43,8 @@ def attack_weight(t, attack):
 def scene_state(t):
     approach = smooth((t-0.4)/1.4)
     retreat = smooth((t-9.5)/1.2)
-    left_x = lerp(270, 450, approach)
-    right_x = lerp(690, 510, approach)
+    left_x = lerp(270, 457, approach)
+    right_x = lerp(690, 503, approach)
     left_x = lerp(left_x, 320, retreat); right_x = lerp(right_x, 640, retreat)
     # Walk cycles are active only while the characters are translating.
     approach_walk = smooth((t-0.42)/0.22) * (1.0-smooth((t-1.72)/0.24))
@@ -66,7 +66,7 @@ def scene_state(t):
         target_point = (poses[target].x, GROUND-132 if attack['target'] == 'head' else GROUND-82)
         shoulder = (poses[a].x, GROUND-111)
         start_hand = (shoulder[0] + direction*19, shoulder[1]+35)
-        hand = (lerp(start_hand[0], target_point[0]-direction*9, w),
+        hand = (lerp(start_hand[0], target_point[0]-direction*3, w),
                 lerp(start_hand[1], target_point[1], w))
         if attack['hand'] == 'right': poses[a].right_hand = hand
         else: poses[a].left_hand = hand
