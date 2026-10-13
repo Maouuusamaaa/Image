@@ -70,7 +70,7 @@ class StickmanRig:
         idle_bob = math.sin(pose.idle_phase) * 1.1
         gait_bob = abs(math.sin(pose.gait_phase * 2.0)) * 2.2 * gait
         bob = idle_bob + gait_bob + pose.body_bob
-        hip = (pose.x + pose.lean * 0.22, pose.ground - 62)
+        hip = (pose.x + pose.lean * 0.22, pose.ground - 60)
         shoulder = (hip[0] + pose.lean, hip[1] - r.torso + pose.crouch * 8 - bob)
         head = (shoulder[0] + pose.head_turn * 5, shoulder[1] - r.head_radius - 2)
         # A relaxed, slightly wider stance; gait feet swing in opposite directions.
