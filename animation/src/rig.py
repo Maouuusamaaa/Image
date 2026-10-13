@@ -55,7 +55,7 @@ class Pose:
     gait_phase: float = 0.0
     gait_weight: float = 0.0
     idle_phase: float = 0.0
-    stance: float = 7.0
+    stance: float = 13.0
     body_bob: float = 0.0
     arm_swing: float = 0.0
 
