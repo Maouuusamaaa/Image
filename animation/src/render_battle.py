@@ -38,7 +38,16 @@ def scene_state(t):
     left_x = lerp(270, 450, approach)
     right_x = lerp(690, 510, approach)
     left_x = lerp(left_x, 320, retreat); right_x = lerp(right_x, 640, retreat)
-    poses = [Pose(left_x, GROUND), Pose(right_x, GROUND)]
+    # Walk cycles are active only while the characters are translating.
+    approach_walk = smooth((t-0.42)/0.22) * (1.0-smooth((t-1.72)/0.24))
+    retreat_walk = smooth((t-9.52)/0.22) * (1.0-smooth((t-10.92)/0.25))
+    walk = clamp(max(approach_walk, retreat_walk))
+    poses = [
+        Pose(left_x, GROUND, gait_phase=t*2.0*math.pi*1.65,
+             gait_weight=walk, idle_phase=t*2.0*math.pi*0.62, stance=8.0),
+        Pose(right_x, GROUND, gait_phase=t*2.0*math.pi*1.65+math.pi,
+             gait_weight=walk, idle_phase=t*2.0*math.pi*0.62+1.1, stance=8.0)
+    ]
     active = []
     for attack in ATTACKS:
         w = attack_weight(t, attack)
@@ -47,8 +56,8 @@ def scene_state(t):
         a = attack['attacker']; target = 1-a
         direction = 1 if a == 0 else -1
         target_point = (poses[target].x, GROUND-132 if attack['target'] == 'head' else GROUND-82)
-        shoulder = (poses[a].x, GROUND-117)
-        start_hand = (shoulder[0] + direction*24, shoulder[1]+18)
+        shoulder = (poses[a].x, GROUND-111)
+        start_hand = (shoulder[0] + direction*19, shoulder[1]+35)
         hand = (lerp(start_hand[0], target_point[0]-direction*9, w),
                 lerp(start_hand[1], target_point[1], w))
         if attack['hand'] == 'right': poses[a].right_hand = hand
@@ -58,10 +67,8 @@ def scene_state(t):
             recoil = smooth((t-attack['contact'])/0.16) * (1.0-smooth((t-attack['contact']-0.24)/0.45))
             poses[target].lean += -direction * 17 * recoil
             poses[target].crouch += 0.25 * recoil
-    # Explicit grounded foot targets keep both feet at the floor during each pose.
-    for p in poses:
-        p.left_foot = (p.x-6, GROUND)
-        p.right_foot = (p.x+6, GROUND)
+    # Do not overwrite gait-generated foot targets: stance feet stay on the floor,
+    # while swing feet lift modestly during the walk cycle.
     return poses, active
 
 def draw_limb(draw, points, width=5):
