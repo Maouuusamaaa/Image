@@ -27,10 +27,18 @@ def smooth(x):
 def lerp(a, b, t): return a + (b-a)*t
 
 def attack_weight(t, attack):
+    """Drive the fist to contact, hold briefly, then retract smoothly.
+
+    The short contact hold keeps the hit readable instead of making the fist
+    reverse direction on the exact frame the impact reaction begins.
+    """
     if t < attack['start'] or t > attack['end']: return 0.0
     if t <= attack['contact']:
         return smooth((t-attack['start'])/(attack['contact']-attack['start']))
-    return 1.0 - smooth((t-attack['contact'])/(attack['end']-attack['contact']))
+    contact_hold = 0.07
+    recovery_start = attack['contact'] + contact_hold
+    if t <= recovery_start: return 1.0
+    return 1.0 - smooth((t-recovery_start)/(attack['end']-recovery_start))
 
 def scene_state(t):
     approach = smooth((t-0.4)/1.4)
