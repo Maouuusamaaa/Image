@@ -6,7 +6,7 @@ This directory is the editable source of truth for the current procedural animat
 
 - `src/rig.py` — rig proportions, reachable target clamping, two-bone IK, pose model.
 - `src/render_battle.py` — choreography, contact timeline, renderer, and MP4 encoder.
-- `tests/test_renderer.py` — tests for segment lengths, ground placement, contact timing, and render output.
+- `tests/test_renderer.py` — tests for segment lengths, ground placement, contact timing, gait variation, idle posture, and render output.
 - `output/` — generated MP4 and contact sheet.
 
 ## Run
@@ -29,4 +29,4 @@ Impacts are gated by explicit contact timestamps. Proportions are configured in 
 
 ## Known next-stage work
 
-This is a procedural foundation, not a claim of pixel-perfect reference replication. The attack schedule remains hand-authored and needs detailed frame-by-frame comparison with the supplied reference clips. Feet are placed on the ground in each frame; persistent world-space foot locking during root motion still needs a dedicated stance controller.
+This is a procedural foundation, not a claim of pixel-perfect reference replication. The attack schedule remains hand-authored and needs detailed frame-by-frame comparison with the supplied reference clips. The current iteration adds a subtle walk cycle, arm counter-swing, wider neutral stance, and small idle breathing/settling motion. This is still procedural motion: inspect the rendered contact sheet/video before judging naturalness. Persistent world-space foot locking during root motion, planted-foot phase control, and reference-matched pose review remain open tasks.
