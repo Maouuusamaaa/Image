@@ -44,9 +44,9 @@ def scene_state(t):
     walk = clamp(max(approach_walk, retreat_walk))
     poses = [
         Pose(left_x, GROUND, gait_phase=t*2.0*math.pi*1.65,
-             gait_weight=walk, idle_phase=t*2.0*math.pi*0.62, stance=8.0),
+             gait_weight=walk, idle_phase=t*2.0*math.pi*0.62, stance=13.0),
         Pose(right_x, GROUND, gait_phase=t*2.0*math.pi*1.65+math.pi,
-             gait_weight=walk, idle_phase=t*2.0*math.pi*0.62+1.1, stance=8.0)
+             gait_weight=walk, idle_phase=t*2.0*math.pi*0.62+1.1, stance=13.0)
     ]
     active = []
     for attack in ATTACKS:
