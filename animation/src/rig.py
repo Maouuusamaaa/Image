@@ -1,4 +1,4 @@
-"""Fixed-length 2D stickman rig with two-bone inverse kinematics."""
+"""Fixed-length 2D stickman rig with natural stance and gait support."""
 from __future__ import annotations
 from dataclasses import dataclass
 import math
@@ -52,6 +52,12 @@ class Pose:
     right_hand: Point | None = None
     left_foot: Point | None = None
     right_foot: Point | None = None
+    gait_phase: float = 0.0
+    gait_weight: float = 0.0
+    idle_phase: float = 0.0
+    stance: float = 7.0
+    body_bob: float = 0.0
+    arm_swing: float = 0.0
 
 class StickmanRig:
     def __init__(self, proportions: Rig | None = None):
@@ -59,17 +65,34 @@ class StickmanRig:
 
     def joints(self, pose: Pose) -> dict[str, Point]:
         r = self.rig
-        hip = (pose.x + pose.lean * 0.25, pose.ground - 62 + pose.crouch * 12)
-        shoulder = (hip[0] + pose.lean, hip[1] - r.torso)
+        gait = max(0.0, min(1.0, pose.gait_weight))
+        # Subtle breathing/settling motion prevents a perfectly frozen mannequin pose.
+        idle_bob = math.sin(pose.idle_phase) * 1.1
+        gait_bob = abs(math.sin(pose.gait_phase * 2.0)) * 2.2 * gait
+        bob = idle_bob + gait_bob + pose.body_bob
+        hip = (pose.x + pose.lean * 0.22, pose.ground - 62 + pose.crouch * 12 - bob)
+        shoulder = (hip[0] + pose.lean, hip[1] - r.torso + pose.crouch * 2)
         head = (shoulder[0] + pose.head_turn * 5, shoulder[1] - r.head_radius - 2)
-        lf = pose.left_foot or (pose.x - 6, pose.ground)
-        rf = pose.right_foot or (pose.x + 6, pose.ground)
+        # A relaxed, slightly wider stance; gait feet swing in opposite directions.
+        stride = math.sin(pose.gait_phase) * 13.0 * gait
+        lift_l = max(0.0, math.sin(pose.gait_phase)) * 5.0 * gait
+        lift_r = max(0.0, -math.sin(pose.gait_phase)) * 5.0 * gait
+        lf_default = (pose.x - pose.stance - stride, pose.ground - lift_l)
+        rf_default = (pose.x + pose.stance + stride, pose.ground - lift_r)
+        lf = pose.left_foot or lf_default
+        rf = pose.right_foot or rf_default
+        # Keep the knee solution valid while avoiding overextended legs.
         lf = reachable_target(hip, lf, r.thigh, r.shin)
         rf = reachable_target(hip, rf, r.thigh, r.shin)
         lk = solve_two_bone(hip, lf, r.thigh, r.shin, bend=-1)
         rk = solve_two_bone(hip, rf, r.thigh, r.shin, bend=1)
-        lh = reachable_target(shoulder, pose.left_hand or (shoulder[0] - 20, shoulder[1] + 20), r.upper_arm, r.forearm)
-        rh = reachable_target(shoulder, pose.right_hand or (shoulder[0] + 20, shoulder[1] + 20), r.upper_arm, r.forearm)
+
+        swing = math.sin(pose.gait_phase) * 11.0 * gait + pose.arm_swing
+        # Bent resting arms hang near the waist rather than sticking straight sideways.
+        default_lh = (shoulder[0] - 17 - swing, shoulder[1] + 39)
+        default_rh = (shoulder[0] + 17 + swing, shoulder[1] + 39)
+        lh = reachable_target(shoulder, pose.left_hand or default_lh, r.upper_arm, r.forearm)
+        rh = reachable_target(shoulder, pose.right_hand or default_rh, r.upper_arm, r.forearm)
         le = solve_two_bone(shoulder, lh, r.upper_arm, r.forearm, bend=-1)
         re = solve_two_bone(shoulder, rh, r.upper_arm, r.forearm, bend=1)
         return {'hip': hip, 'shoulder': shoulder, 'head': head,
