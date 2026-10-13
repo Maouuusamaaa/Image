@@ -59,6 +59,20 @@ class RigTests(unittest.TestCase):
         self.assertEqual(frame.mode, 'RGB')
         self.assertEqual(render_battle.render_frame(90).size, frame.size)
 
+    def test_punch_hand_reaches_target_at_contact(self):
+        rig = StickmanRig()
+        for attack in render_battle.ATTACKS:
+            poses, active = render_battle.scene_state(attack['contact'])
+            self.assertTrue(any(a is attack or a == attack for a, _ in active))
+            attacker = attack['attacker']
+            target = 1 - attacker
+            hand_key = attack['hand'] + '_hand'
+            joints = rig.joints(poses[attacker])
+            target_y = render_battle.GROUND - (132 if attack['target'] == 'head' else 82)
+            target_point = (poses[target].x, target_y)
+            self.assertLessEqual(distance(joints[hand_key], target_point), 20.0,
+                                 msg=f"fist misses {attack['target']} at {attack['contact']}s")
+
     def test_attack_schedule_is_ordered(self):
         contacts = [a['contact'] for a in render_battle.ATTACKS]
         self.assertEqual(contacts, sorted(contacts))
